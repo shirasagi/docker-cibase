@@ -4,7 +4,6 @@ Container for CI/CD
 This container is intended to use with CI/CD.
 Be carefule, this container is not for production.
 
-
 # BUILD
 
 run these commands:

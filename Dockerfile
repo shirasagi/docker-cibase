@@ -1,14 +1,24 @@
-FROM ruby:2.4.6
+FROM ruby:2.6.5
 LABEL maintainer="NAKANO Hideo <nakano@web-tips.co.jp>"
 
 #
 # Google Chrome & Fonts
 #
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
 RUN apt-get update && apt-get install -y google-chrome-stable
 RUN apt install -y fonts-ipafont fonts-ipaexfont && fc-cache -fv
 
+#
+# Mongodb Shell & Tools
+#
+RUN wget -q -O - https://www.mongodb.org/static/pgp/server-3.4.asc | apt-key add -
+RUN sh -c 'echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list'
+RUN sh -c 'echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.4 main" > /etc/apt/sources.list.d/mongodb-org-3.4.list'
+RUN apt-get update
+RUN apt install -y mongodb-org-shell mongodb-org-tools
+
+# Prepare for building custom libs
 RUN mkdir -p /usr/local/src
 
 #
