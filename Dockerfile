@@ -2,6 +2,11 @@ FROM ruby:2.6.5
 LABEL maintainer="NAKANO Hideo <nakano@web-tips.co.jp>"
 
 #
+# timezone
+#
+RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+#
 # Google Chrome & Fonts
 #
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -67,3 +72,8 @@ RUN cd /usr/local/src/open_jtalk-1.07 && sed -i "s/#define MAXBUFLEN 1024/#defin
 RUN cd /usr/local/src/open_jtalk-1.07 && sed -i "s/0x00D0 SPACE/0x000D SPACE/" mecab-naist-jdic/char.def
 RUN cd /usr/local/src/open_jtalk-1.07 && ./configure --with-charset=UTF-8 && make && make install
 RUN ldconfig
+
+#
+# Show Versions
+#
+RUN ruby --version && google-chrome --version
