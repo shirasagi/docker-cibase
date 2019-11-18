@@ -74,6 +74,13 @@ RUN cd /usr/local/src/open_jtalk-1.07 && ./configure --with-charset=UTF-8 && mak
 RUN ldconfig
 
 #
+# Docker: Install Docker from Docker Inc. repositories.
+#
+RUN curl -sSL https://get.docker.com/ | sh
+RUN curl -sSL https://raw.githubusercontent.com/jpetazzo/dind/master/wrapdocker > /usr/local/bin/wrapdocker
+RUN chmod +x /usr/local/bin/wrapdocker
+
+#
 # Show Versions
 #
 RUN ruby --version && google-chrome --version
